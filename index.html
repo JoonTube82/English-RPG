@@ -764,11 +764,14 @@
                     <span id="b-quiz-label" class="text-slate-400 text-xs font-bold uppercase tracking-wider mb-1 block">단어 뜻</span>
                     <h3 id="b-quiz-word" class="text-4xl text-yellow-400 font-black break-keep leading-tight">사과</h3>
                 </div>
-                <div class="relative w-full mb-4">
-                    <input type="password" id="b-spell-in" class="spell-input w-full relative z-0 !text-2xl !p-3" style="color: transparent; caret-color: white;" autocomplete="new-password" autocorrect="off" spellcheck="false" autocapitalize="off" onkeyup="if(event.key==='Enter')window.submitBattleQuiz()" oninput="document.getElementById('b-fake-text').textContent = this.value || '스펠링 입력'; document.getElementById('b-fake-text').style.color = this.value ? '#f9fafb' : '#9ca3af';">
-                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-10 overflow-hidden px-4">
-                        <span id="b-fake-text" class="text-slate-400 text-2xl font-bold whitespace-pre truncate">스펠링 입력</span>
+               <div class="flex flex-col gap-3 mb-4">
+                    <div class="relative w-full">
+                        <input type="password" id="b-spell-in" class="spell-input w-full relative z-0 !text-2xl !p-3" style="color: transparent; caret-color: white;" autocomplete="new-password" autocorrect="off" spellcheck="false" autocapitalize="off" onkeyup="if(event.key==='Enter')window.submitBattleQuiz()" oninput="document.getElementById('b-fake-text').textContent = this.value || '스펠링 입력'; document.getElementById('b-fake-text').style.color = this.value ? '#f9fafb' : '#9ca3af';">
+                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-10 overflow-hidden px-4">
+                            <span id="b-fake-text" class="text-slate-400 text-2xl font-bold whitespace-pre truncate">스펠링 입력</span>
+                        </div>
                     </div>
+                    <button onclick="window.submitBattleQuiz()" class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-black py-3 rounded-xl shadow-md transition-transform active:scale-95 text-xl">입력하기</button>
                 </div>
                 <div class="w-full bg-slate-700 h-3 rounded-full overflow-hidden border border-slate-600">
                     <div id="b-timer-bar" class="h-full bg-red-500 w-full transition-none"></div>
