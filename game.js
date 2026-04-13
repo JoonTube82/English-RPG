@@ -1298,11 +1298,31 @@ const startQuizTimer = (duration) => {
 };
 
 window.submitBattleQuiz = (isTimeout = false) => {
+    const inputEl = document.getElementById('b-spell-in');
+    const inputVal = inputEl.value.trim().toLowerCase();
+    const correctWord = window.battleState.expectedWord.toLowerCase();
+
+    // 💡 [핵심 추가] 시간 초과가 아닌데(버튼 클릭/엔터) 오답이거나 빈칸인 경우 -> 실패(X) 재도전(O)
+    if (!isTimeout && inputVal !== correctWord) {
+        inputEl.value = ''; // 입력창 비우기
+        const fakeText = document.getElementById('b-fake-text');
+        if (fakeText) {
+            fakeText.textContent = '다시 입력하세요!';
+            fakeText.style.color = '#ef4444'; // 빨간색 경고 글씨
+        }
+        // 입력창 빨갛게 깜빡이기 효과 (틀렸다는 시각적 피드백)
+        inputEl.classList.add('border-red-500', 'bg-red-900/50');
+        setTimeout(() => {
+            inputEl.classList.remove('border-red-500', 'bg-red-900/50');
+        }, 300);
+        inputEl.focus();
+        return; // ⛔ 여기서 함수를 종료하여 창이 안 닫히고 타이머가 계속 가도록 만듭니다!
+    }
+
+    // --- 여기서부터는 정답이거나, 시간이 완전히 다 끝난(isTimeout) 경우에만 실행됩니다 ---
     clearTimeout(window.battleState.quizTimeout);
     document.getElementById('battle-quiz-modal').style.display = 'none';
     
-    const inputVal = document.getElementById('b-spell-in').value.trim().toLowerCase();
-    const correctWord = window.battleState.expectedWord.toLowerCase();
     const success = (!isTimeout && inputVal === correctWord);
 
     const myMon = window.battleState.myTeam[window.battleState.myIdx];
@@ -1311,7 +1331,7 @@ window.submitBattleQuiz = (isTimeout = false) => {
     if (window.battleState.isShieldMode) {
         if (success) { logBattleMsg("🛡️ 완벽한 방어! 데미지를 입지 않았다!", true); } 
         else {
-            let dmg = Math.floor(oppMon.atk * 7); // 방어 실패 시 7배 데미지
+            let dmg = Math.floor(oppMon.atk * 20); // 방어 실패 시 7배 데미지
             myMon.hp -= dmg; showDmgText(dmg, false, true);
             logBattleMsg("💥 방어 실패! 엄청난 데미지를 입었다!", true);
         }
@@ -1320,7 +1340,7 @@ window.submitBattleQuiz = (isTimeout = false) => {
             let dmg = Math.floor(myMon.atk * 7); // 공격 성공 시 7배 데미지
             oppMon.hp -= dmg; showDmgText(dmg, true, true);
             logBattleMsg("⚡ 스페셜 어택 명중! 효과가 굉장했다!", true);
-        } else { logBattleMsg("💦 스펠링을 틀려 스페셜 어택이 빗나갔다...", false); }
+        } else { logBattleMsg("💦 시간 초과! 스페셜 어택이 빗나갔다...", false); }
     }
 
     updateBattleUI();
@@ -1329,6 +1349,7 @@ window.submitBattleQuiz = (isTimeout = false) => {
     if(!isGameOver) {
         // 배틀 다시 재생!
         window.battleState.active = true;
+        if(window.battleState.oppTimer) clearInterval(window.battleState.oppTimer);
         window.battleState.oppTimer = setInterval(() => { if(window.battleState.active) opponentAttack(); }, 200);
     }
 };
