@@ -41,7 +41,20 @@ window.AudioManager = {
     }
 };
 window.AudioManager.init();
-
+// ==========================================
+// ★ 단어 읽어주기 (TTS) 기능 추가
+// ==========================================
+window.speakWord = (text, event) => {
+    if (event) event.stopPropagation(); // 버튼 누를 때 다른 이벤트 겹침 방지
+    if (!text && window.state.currentQuiz) text = window.state.currentQuiz.word;
+    if (!text) return;
+    
+    window.speechSynthesis.cancel(); // 기존에 읽고 있던 소리 취소
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'en-US'; // 미국 영어 발음
+    utterance.rate = 0.85;    // 6학년 학생들을 위해 기본 속도보다 아주 살짝 느리게 설정
+    window.speechSynthesis.speak(utterance);
+};
 window.state = {
     user: null, 
     authUid: null,
