@@ -763,7 +763,10 @@
                 <p id="b-quiz-desc" class="text-slate-300 font-bold mb-6 text-sm">제한 시간 안에 영단어를 입력하세요!</p>
                 <div class="bg-black/50 rounded-2xl p-6 mb-6 border border-slate-600 shadow-inner">
                     <span id="b-quiz-label" class="text-slate-400 text-xs font-bold uppercase tracking-wider mb-1 block">단어 뜻</span>
-                    <h3 id="b-quiz-word" class="text-4xl text-yellow-400 font-black break-keep leading-tight">사과</h3>
+                    <div class="flex justify-center items-center gap-3">
+                        <h3 id="b-quiz-word" class="text-4xl text-yellow-400 font-black break-keep leading-tight">사과</h3>
+                        <button onclick="window.speakWord(window.battleState.expectedWord, event)" class="bg-slate-700 hover:bg-slate-600 text-white rounded-full w-10 h-10 flex items-center justify-center text-xl transition-transform active:scale-90 shadow-sm border border-slate-500" title="발음 힌트 듣기">🔊</button>
+                    </div>
                 </div>
                <div class="flex flex-col gap-3 mb-4">
                     <div class="relative w-full">
