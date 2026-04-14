@@ -477,10 +477,13 @@ window.showCheatSheet = () => {
     if (filteredQuizzes.length === 0) listEl.innerHTML = '<p class="text-center text-slate-400 py-10 text-sm">등록된 영단어가 없습니다.</p>';
     else {
         let html = '';
-        filteredQuizzes.forEach(q => {
+filteredQuizzes.forEach(q => {
             html += `
-            <div class="bg-slate-900/80 rounded-xl p-3 border border-slate-700 shadow-inner flex flex-col gap-1 select-none pointer-events-none">
-                <div class="font-black text-indigo-400 text-lg">${q.word}</div>
+            <div class="bg-slate-900/80 rounded-xl p-3 border border-slate-700 shadow-inner flex flex-col gap-1 select-none">
+                <div class="font-black text-indigo-400 text-lg flex items-center justify-between">
+                    ${q.word}
+                    <button onclick="window.speakWord('${q.word}', event)" class="hover:scale-125 transition-transform" title="발음 듣기">🔊</button>
+                </div>
                 <div class="text-sm text-slate-300 font-bold">${q.meaning}</div>
             </div>`;
         });
