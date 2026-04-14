@@ -691,8 +691,11 @@ window.renderDex = async () => {
             <div class="h-24 w-24 flex items-center justify-center my-1 relative ${auraBg} rounded-full p-1 transition-all">
                 <img src="${item.pInfo.imgSrc}" crossorigin="anonymous" class="max-w-full max-h-full object-contain" style="image-rendering: pixelated;" />
             </div>
-            <div class="w-full text-center bg-white rounded-xl py-2 mt-2 shadow-sm">
-                <div class="font-black text-slate-800 text-base capitalize truncate px-1">${item.word}</div>
+<div class="w-full text-center bg-white rounded-xl py-2 mt-2 shadow-sm">
+                <div class="font-black text-slate-800 text-base capitalize truncate px-1 flex justify-center items-center gap-1">
+                    ${item.word}
+                    <button onclick="window.speakWord('${item.word}', event)" class="hover:scale-125 transition-transform text-sm" title="발음 듣기">🔊</button>
+                </div>
                 <div class="text-slate-500 text-xs truncate px-1">${item.meaning}</div>
                 <div class="mt-1 flex items-center justify-center gap-1">
                     <span class="text-[9px] text-white ${typeInfo.bg} rounded px-1 font-bold shadow-sm">${typeInfo.name}</span>
