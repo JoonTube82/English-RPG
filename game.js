@@ -14,8 +14,22 @@ window.AudioManager = {
     },
     currentType: null,
     isMuted: false,
+    volume: 0.5, // ⭐ 기본 소리 크기 (0.0 ~ 1.0)
     init: function() {
-        Object.values(this.bgms).forEach(audio => { audio.loop = true; });
+        Object.values(this.bgms).forEach(audio => { 
+            audio.loop = true; 
+            audio.volume = this.volume; // 로딩 시 볼륨 적용
+        });
+    },
+    // ⭐ 소리 크기를 실시간으로 조절하는 함수 추가
+    setVolume: function(val) {
+        this.volume = parseFloat(val);
+        Object.values(this.bgms).forEach(audio => { 
+            audio.volume = this.volume; 
+        });
+        // 볼륨이 0이 되면 음소거 아이콘으로 변경
+        const btn = document.getElementById('btn-mute');
+        if(btn) btn.innerText = this.volume === 0 ? '🔇' : '🎵';
     },
     playBGM: function(type) {
         if (this.currentType === type) return;
@@ -25,6 +39,7 @@ window.AudioManager = {
         }
         this.currentType = type;
         if (!this.isMuted && this.bgms[type]) {
+            this.bgms[type].volume = this.volume; // 재생 전 볼륨 확인
             this.bgms[type].play().catch(e => console.log("BGM 재생 대기 중:", e));
         }
     },
@@ -35,7 +50,10 @@ window.AudioManager = {
             if (this.currentType && this.bgms[this.currentType]) this.bgms[this.currentType].pause();
             if (btn) btn.innerText = '🔇';
         } else {
-            if (this.currentType && this.bgms[this.currentType]) this.bgms[this.currentType].play().catch(e => console.log(e));
+            if (this.currentType && this.bgms[this.currentType]) {
+                this.bgms[this.currentType].volume = this.volume;
+                this.bgms[this.currentType].play().catch(e => console.log(e));
+            }
             if (btn) btn.innerText = '🎵';
         }
     }
