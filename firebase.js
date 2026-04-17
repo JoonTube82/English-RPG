@@ -3,13 +3,13 @@ import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gsta
 import { getFirestore, collection, doc, getDoc, getDocs, setDoc, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
 // 학생 명단 내보내기 (export)
-export const STUDENT_LIST = ["0.서영", "1.단엘", "2.라희", "3.민지", "4.정훈", "5.문경", "6.소윤", "7.하율", "8.현수", "9.시율", "10.은영", "11.이담", "12.훈태", "마스터", "테스트", "선생님", "테스트2"];
+export const STUDENT_LIST = ["0.서영", "1.단엘", "2.라희", "3.민지", "4.정훈", "5.문경", "6.소윤", "7.하율", "8.현수", "9.시율", "10.은영", "11.이담", "12.훈태", "13.시진", "마스터", "테스트", "선생님", "테스트2"];
 
 export const STUDENT_GENDER = {
     "0.서영": "female", "1.단엘": "male", "2.라희": "female", "3.민지": "female", 
     "4.정훈": "male", "5.문경": "male", "6.소윤": "female", "7.하율": "female", 
     "8.현수": "male", "9.시율": "male", "10.은영": "female", "11.이담": "male", 
-    "12.훈태": "male", "마스터": "male", "테스트": "female", "선생님": "male", "테스트2": "female"
+    "12.훈태": "male", "13.시진": "male", "마스터": "male", "테스트": "female", "선생님": "male", "테스트2": "female"
 };
 
 export const initStudentSelect = () => {
